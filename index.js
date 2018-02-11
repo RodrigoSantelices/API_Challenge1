@@ -11,7 +11,7 @@ function getDataFromApi(searchTerm, callback){
     part: 'snippet',
     key: 'AIzaSyAcQZoB0aRBwDFCoFdxsQ7V7UacB37xV2Y',
     q: `${searchTerm}`,
-    maxResults: 5
+    resultsPerPage: 6,
   }
   $.getJSON(YOUTUBE_SEARCH_URL, query, callback)
   console.log(query)
@@ -24,11 +24,11 @@ function renderResults(result){
 
   <div>
        <h2>
-       <a class="js-result-name" href='https://youtu.be/${result.id.videoId}' target="_blank">${result.snippet.title}</a> by <a class="js-channel" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h2>
-       <a href='https://youtu.be/${result.id.videoId}' class="js-thumbnail" target='_blank'><img src= '${result.snippet.thumbnails.medium.url}'></a>
+       <a class="js-result-name" href='https://youtu.be/${result.id.videoId}' target="_blank">${result.snippet.title}</a> by <a class="js-channel" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a>
+       </h2>
+       <a href='https://youtu.be/${result.id.videoId}' class="js-thumbnail" target='_blank'><img src= '${result.snippet.thumbnails.medium.url}' alt='${result.snippet.description}'></a>
      </div>
-   `;
-
+   `
  }
 
 // displays items
@@ -36,6 +36,8 @@ function displayYoutubeData(data) {
   const results = data.items.map((item, index) =>
 renderResults(item));
 $(`.js-search-results`).html(results);
+$(`.results`).remove();
+$(`.js-results-num`).append(`<p class='results'>${data.pageInfo.totalResults}</p>`)
   console.log('data displays')
 }
 
@@ -49,9 +51,11 @@ $(`.js-search`).submit(event =>{
   queryTarget.val("");
   getDataFromApi(query, displayYoutubeData);
 
+// currently can keep spawning new next buttons
+/*
   $(`.js-nav`).append(`
     <button type="button" class="hide previous">Prev</button>
-    <button type="button" class="next">Next</button>`);
+    <button type="button" class="next">Next</button>`); */
 });
 
 

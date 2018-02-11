@@ -12,18 +12,18 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <main>
+    <main role="main">
     <h1>Youtube Search</h1>
     <form class="js-search" action="index.html" method="post">
-      <label for="query"></label>
+      <label for="query" hidden="hidden">Search bar</label>
       <input type="text" name="video search" class="js-query">
       <button type="submit" name="button">Search Video</button>
     </form>
     <section class="js-nav">
 
     </section>
-    <h2>Results</h2>
-    <div class="js-search-results">
+    <h2 class="js-results-num hidden">Results: </h2>
+    <div class="js-search-results" aria-live= 'assertive'>
 
     </div>
   </main>
